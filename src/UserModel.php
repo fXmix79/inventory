@@ -11,8 +11,16 @@ class UserModel {
         $this->pdo = $pdo;
     }
 
+    public function checkUser($username, $password) {
+        $stmt = $this->pdo->prepare("SELECT password from users where username = ?");
+        $hash =  $stmt->execute([$username]);
+        $hash = $stmt->fetchColumn();
+        return password_verify($password, $hash);
+    }
+        
+
     public function addUser($username, $password) {
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
         return $stmt->execute([$username, $hashedPassword]);
     }
@@ -40,7 +48,7 @@ class UserModel {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user){
             if ($new_password === $repeat_password) {
-                $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                 $stmt = $this->pdo->prepare("UPDATE users SET username = ?, password = ? WHERE username = ?");
                 if ($stmt->execute([$new_username, $hashed_password, $old_username])) {
                     echo "User updated successfully.";

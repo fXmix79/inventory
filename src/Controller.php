@@ -11,9 +11,24 @@ class Controller {
     }
 
     public function handleRequest() {
+
         $page = $_GET['page'] ?? 'home';
+        if(!isset($_SESSION['username'])) {
+            $page = 'login'; }
 
         switch ($page) {
+            case 'login':
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $username = htmlspecialchars($_POST['username']);
+                    $password = htmlspecialchars($_POST['password']);
+                    if ($this->model->checkUser($username, $password)){
+                        $_SESSION['username'] = $username;                      
+                        $this->render('home');
+                        break;
+                    }
+                }
+                $this->render('login');
+                break;            
             case 'addUser':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $username = htmlspecialchars($_POST['username']);
@@ -45,7 +60,7 @@ class Controller {
     }
 
     private function render($view, $data = []) {
-        include_once 'views/header.php';
+        isset($_SESSION['username']) ? include_once 'views/header.php' : include_once 'views/loginHeader.php';        
         include_once "views/{$view}.php";
         include_once 'views/footer.php';
     }
