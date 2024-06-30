@@ -8,7 +8,8 @@ class Links {
         'home' => '/',
         'addUser' => '/addUser',
         'removeUser' => '/removeUser',
-        'getAllUsers' => '/getAllUsers'
+        'getAllUsers' => '/getAllUsers',
+        'modifyUser' => '/modifyUser'
     ];
 
 

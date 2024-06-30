@@ -33,6 +33,12 @@ class Controller {
                 $users = $this->model->getAllUsers();
                 $this->render('getAllUsers', ['users' => $users]);
                 break;
+            case 'modifyUser':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+                    $users = $this->model->modifyUser();
+                }
+                $this->render('modifyUser');
+                break;
             default:
                 $this->render('home');
         }
