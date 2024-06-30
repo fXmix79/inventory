@@ -25,7 +25,7 @@ class Controller {
             case 'removeUser':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $username = htmlspecialchars($_POST['username']);
-                    $this->model->removeUser($_POST['username']);
+                    $this->model->removeUser($username);
                 }
                 $this->render('removeUser');
                 break;
