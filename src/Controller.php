@@ -28,7 +28,12 @@ class Controller {
                     }
                 }
                 $this->render('login');
-                break;            
+                break;  
+            case 'logout':
+                session_unset();
+                session_destroy();
+                $this->render('login');
+                break;          
             case 'addUser':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $username = htmlspecialchars($_POST['username']);
