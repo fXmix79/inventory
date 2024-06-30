@@ -13,7 +13,7 @@ use App\Links;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Navigation</title>
+    <title>Inventory</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,6 +52,27 @@ use App\Links;
             margin-top: 20px;
             width: 100%;
             text-align: center;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .content {
+            flex: 1;
         }
     </style>
 </head>

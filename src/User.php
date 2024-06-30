@@ -4,7 +4,7 @@ namespace App;
 
 use PDO;
 
-class UserModel {
+class User {
     private $pdo;
 
     public function __construct($pdo) {
@@ -25,7 +25,7 @@ class UserModel {
         return $stmt->execute([$username, $hashedPassword]);
     }
 
-    public function removeUser($username) {
+    public function deleteUser($username) {
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE username = ?");
         return $stmt->execute([$username]);
     }
@@ -51,15 +51,15 @@ class UserModel {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                 $stmt = $this->pdo->prepare("UPDATE users SET username = ?, password = ? WHERE username = ?");
                 if ($stmt->execute([$new_username, $hashed_password, $old_username])) {
-                    echo "User updated successfully.";
+                    echo "<script>alert('User updated successfully.');</script>";
                 } else {
-                    echo "Failed to update user.";
+                    echo "<script>alert('Failed to update user.');</script>";
                 }
             } else {
-                echo "Passwords do not match.";
+                echo "<script>alert('Passwords do not match.');</script>";
             }   
         } else {
-            echo "No {$old_username} in database";
+            echo "<script>alert('No {$old_username} in database');</script>";
         }
         
     }

@@ -7,14 +7,16 @@ class Links {
     private static $links = [
         'home'          => '/',
         'addUser'       => '/addUser',
-        'removeUser'    => '/removeUser',
+        'deleteUser'    => '/deleteUser',
         'getAllUsers'   => '/getAllUsers',
         'modifyUser'    => '/modifyUser',
         'logout'        => '/logout'
     ];
 
 
-    public static function getLinks() {
-        return Links::$links;
+    public static function getLinks(){
+        return self::$links;
     }
+
+
 }
