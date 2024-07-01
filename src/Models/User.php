@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use PDO;
 
@@ -22,12 +22,18 @@ class User {
     public function addUser($username, $password) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-        return $stmt->execute([$username, $hashedPassword]);
+        $stmt->execute([$username, $hashedPassword]);
+        echo "<script>alert('User {$username} added to database');</script>";
     }
 
     public function deleteUser($username) {
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE username = ?");
-        return $stmt->execute([$username]);
+        $stmt->execute([$username]);
+        if($stmt->rowCount()){
+            echo "<script>alert('User {$username} deleted from database');</script>";
+        } else {
+            echo "<script>alert('No user {$username} found in database');</script>";
+        }
     }
 
     public function getAllUsers() {

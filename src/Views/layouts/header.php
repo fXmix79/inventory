@@ -1,7 +1,7 @@
 
 <?php
 
-use App\Links;
+use App\Core\Router;
 
 ?>
 
@@ -74,12 +74,24 @@ use App\Links;
         .content {
             flex: 1;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
     <div class="nav-container">
-        <?php foreach (Links::getLinks() as $name => $link): ?>
-            <a href="?page=<?php echo htmlspecialchars($name); ?>"><?php echo ucfirst($name); ?></a>
+        <?php foreach (Router::getAllRoutes() as $route): ?>
+            <a href="?page=<?php echo htmlspecialchars($route); ?>"><?php echo ucfirst($route); ?></a>
         <?php endforeach; ?>
     </div>
     <div class="content">

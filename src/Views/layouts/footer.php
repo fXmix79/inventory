@@ -1,5 +1,5 @@
     </div>
-<footer class="footer">
+    <footer class="footer">
         Inventory &copy; <span id="year"></span>
     </footer>
 

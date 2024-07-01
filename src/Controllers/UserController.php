@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Controllers;
 
 
 class UserController {
@@ -54,9 +54,9 @@ class UserController {
                 return;
             } else {
                 echo "<script>alert('Bad username or password.');</script>";                                            
-            }
-            $this->render('login');           
+            }                       
         }
+        $this->render('login');
     }
 
     private function logout(){
@@ -93,8 +93,10 @@ class UserController {
     }
 
     private function render($view, $data = []) {
-        isset($_SESSION['username']) ? include_once 'views/header.php' : include_once 'views/loginHeader.php';        
-        include_once "views/{$view}.php";
-        include_once 'views/footer.php';
+        isset($_SESSION['username'])
+            ? include_once ROOT . 'src/views/layouts/header.php'
+            : include_once ROOT . 'src/views/layouts/loginHeader.php';        
+        include_once ROOT . "src/views/user/{$view}.php";
+        include_once ROOT . 'src/views/layouts/footer.php';
     }
 }
