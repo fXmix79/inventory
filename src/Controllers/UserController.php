@@ -11,12 +11,9 @@ class UserController {
         $this->model = $model;
     }
 
-    public function handleRequest() {
-
-        $page = $_GET['page'] ?? 'home';
-        if(!isset($_SESSION['username'])) { $page = 'login'; }
-
-        switch ($page) {
+    public function handleRequest() {        
+        
+        switch ($_GET['page']) {
             case 'login':                
                 $this->login();                                                          
                 break;  
@@ -39,8 +36,11 @@ class UserController {
                 $this->modifyUser();
                 $this->render('modifyUser');               
                 break;
-            default:
+            case 'home':
                 $this->render('home');
+                break;
+            case'404':
+                $this->render('404');
         }
     }
 

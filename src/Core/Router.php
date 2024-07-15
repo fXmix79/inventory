@@ -14,19 +14,24 @@ class Router {
         ['route' => 'deleteProduct',    'controller' => 'product'],
         ['route' => 'getAllProducts',   'controller' => 'product'],
         ['route' => 'modifyProduct',    'controller' => 'product'],
+        ['route' => 'filterProduct',    'controller' => 'product'],
         ['route' => 'logout',           'controller' => 'user'],
         
     ];
 
 
-    public static function getController($route) {
-        foreach(self::$routes as $routes){
-            if($routes['route'] === $route){
-                $controller = $routes['controller'];
+    public static function dispatch($route) {
+        
+        if($route == 'login') return 'user';
+
+        foreach(self::$routes as $_route){
+            if($_route['route'] == $route){
+                $controller = $_route['controller'];
                 return $controller;
             }
         }
-        return 'user';
+        $_GET['page'] = '404';
+        return 'user';        
     }
 
     public static function getAllRoutes(){

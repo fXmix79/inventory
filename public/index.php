@@ -23,16 +23,19 @@ try {
     $pdo = $dbInstance->getConnection();
 
     $_GET['page'] = $_GET['page'] ?? 'login';
+    $_GET['page'] = htmlspecialchars($_GET['page']);
 
-    switch (Router::getController($_GET['page'])){
+    switch (Router::dispatch($_GET['page'])){
         case 'user':
             $model = new User($pdo);    
             $controller = new UserController($model);
             $controller->handleRequest();
+            break;
         case 'product':
             $model = new Product($pdo);    
             $controller = new ProductController($model);
             $controller->handleRequest();
+            break;
     }
 
 } catch (PDOException $e) {

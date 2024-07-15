@@ -13,9 +13,7 @@ class ProductController {
 
     public function handleRequest() {
 
-        $page = $_GET['page'] ?? 'getAllProducts';
-
-        switch ($page) {
+        switch ($_GET['page']) {
             case 'getAllProducts':                
                 $this->getAllProducts();                                                          
                 break;  
@@ -30,6 +28,10 @@ class ProductController {
             case 'modifyProduct':
                 $this->modifyProduct();
                 $this->render('modifyProduct');
+                break;
+            case 'filterProduct':
+                $products = $this->filterProduct();
+                $this->render('filterProduct', $products);
                 break;
         }
     }
@@ -71,6 +73,14 @@ class ProductController {
             $new_quantity = htmlspecialchars($_POST['new_quantity']);
             $new_price =  htmlspecialchars($_POST['new_price']);
         $this->model->modifyProduct($old_name, $new_name, $new_quantity, $new_price);         
+        }
+    }
+    private function filterProduct(){ 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $search = htmlspecialchars($_POST['search']);
+            $minQuantity = htmlspecialchars($_POST['min_quantity']);
+            $maxQuantity = htmlspecialchars($_POST['max_quantity']);
+            return $this->model->filterProduct($search, $minQuantity, $maxQuantity);         
         }
     }
 

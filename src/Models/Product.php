@@ -62,10 +62,14 @@ class Product {
             echo "<script>alert('Product updated successfully.');</script>";
         } else {
             echo "<script>alert('Failed to update product.');</script>";
-        }
-             
-            
-        
-        
+        }    
+    }
+
+    public function filterProduct($search, $minQuantity, $maxQuantity){
+        $stmt = $this->pdo->prepare("select * from products where name like ? and quantity between ? and ?");
+        $stmt->execute(["%$search%", $minQuantity, $maxQuantity]);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //echo "<pre>"; var_dump($products); die();
+        return $products;
     }
 }
