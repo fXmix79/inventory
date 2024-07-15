@@ -15,6 +15,7 @@ class Router {
         ['route' => 'getAllProducts',   'controller' => 'product'],
         ['route' => 'modifyProduct',    'controller' => 'product'],
         ['route' => 'filterProduct',    'controller' => 'product'],
+        ['route' => 'report',           'controller' => 'product'],
         ['route' => 'logout',           'controller' => 'user'],
         
     ];

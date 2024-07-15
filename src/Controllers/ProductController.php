@@ -33,6 +33,9 @@ class ProductController {
                 $products = $this->filterProduct();
                 $this->render('filterProduct', $products);
                 break;
+            case 'report':
+                $this->report();
+                break;
         }
     }
 
@@ -75,6 +78,7 @@ class ProductController {
         $this->model->modifyProduct($old_name, $new_name, $new_quantity, $new_price);         
         }
     }
+
     private function filterProduct(){ 
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             $search = htmlspecialchars($_POST['search']);
@@ -82,6 +86,11 @@ class ProductController {
             $maxQuantity = htmlspecialchars($_POST['max_quantity']);
             return $this->model->filterProduct($search, $minQuantity, $maxQuantity);         
         }
+    }
+
+    private function report(){      
+        $products = $this->model->report();
+        $this->render('report', $products);
     }
 
     private function render($view, $data = []) {

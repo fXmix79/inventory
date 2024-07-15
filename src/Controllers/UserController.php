@@ -47,7 +47,7 @@ class UserController {
     private function login(){ 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {       
             $username = htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
+            $password = $_POST['password'];
             if ($this->model->checkUser($username, $password)){
                 $_SESSION['username'] = $username;                      
                 $this->render('home');
@@ -67,7 +67,7 @@ class UserController {
     private function addUser(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
             $username = htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
+            $password = $_POST['password'];
             $this->model->addUser($username, $password);  
         }
     }

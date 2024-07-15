@@ -72,4 +72,22 @@ class Product {
         //echo "<pre>"; var_dump($products); die();
         return $products;
     }
+
+    public function report(){
+        $stmt = $this->pdo->prepare("
+            select 
+                name, 
+                sum(quantity) as total_quantity, 
+                avg(price) as average_price, 
+                sum(quantity * price) as total_value 
+            from products 
+            group by name
+        ");
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //echo "<pre>"; var_dump($products); die();
+        return $products;
+    }
+
+
 }
