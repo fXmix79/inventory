@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Utils\Utils;
+
 
 class UserController {
     private $model;
@@ -45,18 +47,12 @@ class UserController {
     }
 
     private function login(){ 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {       
-            $username = htmlspecialchars($_POST['username']);
-            $password = $_POST['password'];
-            if ($this->model->checkUser($username, $password)){
-                $_SESSION['username'] = $username;                      
-                $this->render('home');
-                return;
-            } else {
-                echo "<script>alert('Bad username or password.');</script>";                                            
-            }                       
+        if (Utils::isPostSet()) {
+            $this->model->checkUser(Utils::sanitizePostToArray());                        
         }
-        $this->render('login');
+        isset($_SESSION['username'])
+            ? $this->render('home')
+            : $this->render('login');
     }
 
     private function logout(){
@@ -65,30 +61,25 @@ class UserController {
     }
 
     private function addUser(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
-            $username = htmlspecialchars($_POST['username']);
-            $password = $_POST['password'];
-            $this->model->addUser($username, $password);  
+        if (Utils::isPostSet()) {
+            $this->model->addUser(Utils::sanitizePostToArray());  
         }
     }
 
     private function deleteUser(){  
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {      
-            $username = htmlspecialchars($_POST['username']);
-            $this->model->deleteUser($username);            
+        if (Utils::isPostSet()) {
+            $this->model->deleteUser(Utils::sanitizePostToArray());            
         }
-    }
-               
-       
-
+    }             
+ 
     private function getAllUsers(){
         $users = $this->model->getAllUsers();
         $this->render('getAllUsers', ['users' => $users]);        
     }
 
     private function modifyUser(){    
-        if ($_SERVER['REQUEST_METHOD'] === 'POST'){    
-        $users = $this->model->modifyUser();            
+        if (Utils::isPostSet()){    
+        $this->model->modifyUser(Utils::sanitizePostToArray());            
         }
     }
 

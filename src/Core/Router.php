@@ -40,4 +40,11 @@ class Router {
 
     }
 
+    /*
+    private function checkUrlExists(): bool{
+        $end = end(explode('?', $_SERVER['REQUEST_URI']));
+        if( isset($end)) {return true;} else {return false;}
+    }
+    */
+
 }
