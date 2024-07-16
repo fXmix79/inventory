@@ -1,7 +1,7 @@
 <div>
 
 </div>
-<?php if (empty($data)) echo "<h1>Nema takvih proizvoda</h1>"; ?>
+<?php if (isset($data) && empty($data)) echo "<h1>Nema takvih proizvoda</h1>"; ?>
 
 <?php if (!empty($data)): ?>
       <table>

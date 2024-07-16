@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Utils\Utils;
 
 class ProductController {
     private $model;
@@ -47,22 +48,14 @@ class ProductController {
 
 
     private function addProduct(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = htmlspecialchars($_POST['name']);
-            $quantity = htmlspecialchars($_POST['quantity']);
-            $price =  htmlspecialchars($_POST['price']);
-            if($price < 0){
-                echo "<script>alert('Price can not be less than 0.');</script>";
-                return;
-            }  
-            $this->model->addProduct($name, $quantity, $price);  
+        if (Utils::isPostSet()) {
+            $this->model->addProduct(Utils::sanitizePostToArray());  
         }
     }
 
     private function deleteProduct(){  
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {      
-            $name = htmlspecialchars($_POST['name']);
-            $this->model->deleteProduct($name);           
+        if (Utils::isPostSet()) {
+            $this->model->deleteProduct(Utils::sanitizePostToArray());           
         }
     }
                
@@ -70,21 +63,14 @@ class ProductController {
 
 
     private function modifyProduct(){    
-        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $old_name = htmlspecialchars($_POST['old_name']);
-            $new_name = htmlspecialchars($_POST['new_name']);
-            $new_quantity = htmlspecialchars($_POST['new_quantity']);
-            $new_price =  htmlspecialchars($_POST['new_price']);
-        $this->model->modifyProduct($old_name, $new_name, $new_quantity, $new_price);         
+        if (Utils::isPostSet()){
+        $this->model->modifyProduct(Utils::sanitizePostToArray());         
         }
     }
 
     private function filterProduct(){ 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $search = htmlspecialchars($_POST['search']);
-            $minQuantity = htmlspecialchars($_POST['min_quantity']);
-            $maxQuantity = htmlspecialchars($_POST['max_quantity']);
-            return $this->model->filterProduct($search, $minQuantity, $maxQuantity);         
+        if (Utils::isPostSet()){
+            return $this->model->filterProduct(Utils::sanitizePostToArray());         
         }
     }
 
